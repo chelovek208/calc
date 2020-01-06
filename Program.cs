@@ -16,7 +16,8 @@ namespace calc
 
             for ( int i = 0; i < Expression.Length; i++)
             {
-                Int32.TryParse(Convert.ToString(Expression[i]), out IsDigit );
+                Int32.TryParse(Convert.ToString(Expression[i]), out IsDigit ); 
+                if (Expression[i] == '0') { IsDigit = 1; }
                 
                 if(Convert.ToBoolean(IsDigit))
                 {
@@ -57,6 +58,11 @@ namespace calc
                             NextPart = Convert.ToInt32(Part);
                             Switch = '/';
                             Part = "";
+                            break;
+
+                        case '-':
+                            Parts.Add(Convert.ToInt32(Part));
+                            Part = "-";
                             break;
                     }
                     
