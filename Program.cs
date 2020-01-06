@@ -12,7 +12,7 @@ namespace calc
             int NextPart=0;
             int IsDigit;
             List<int> Parts = new List<int>();
-            bool Switch = false;
+            char Switch = ' ';
 
             for ( int i = 0; i < Expression.Length; i++)
             {
@@ -24,11 +24,21 @@ namespace calc
                 }
                 else
                 {
-                    if (Switch)
+                    if (Switch!=' ')
                     {
-                        Switch = false;
-                        Part = Convert.ToString(Convert.ToInt32(Part)* NextPart);
+                        if (Switch == '*')
+                        {
+                            Part = Convert.ToString(Convert.ToInt32(Part) * NextPart);
+                            Switch = ' ';
+                        }
+                        else
+                        {
+                            Part = Convert.ToString(NextPart / Convert.ToInt32(Part));
+                            Switch = ' ';
+                        }
                     }
+                    
+                    
 
                     switch (Expression[i])
                     {
@@ -39,7 +49,13 @@ namespace calc
 
                         case '*':
                             NextPart = Convert.ToInt32(Part);
-                            Switch = true;
+                            Switch = '*';
+                            Part = "";
+                            break;
+
+                        case '/':
+                            NextPart = Convert.ToInt32(Part);
+                            Switch = '/';
                             Part = "";
                             break;
                     }
